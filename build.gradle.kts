@@ -133,6 +133,10 @@ tasks {
     }
 }
 
+tasks.named("buildSearchableOptions").configure {
+    enabled = false
+}
+
 intellijPlatformTesting {
     runIde {
         register("runIdeForUiTests") {

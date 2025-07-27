@@ -5,11 +5,16 @@
     <vendor>yyyangshenghao</vendor>
 
     <depends>com.intellij.modules.platform</depends>
+    <depends>com.intellij.modules.java</depends>
 
     <resource-bundle>messages.MyBundle</resource-bundle>
 
     <extensions defaultExtensionNs="com.intellij">
         <toolWindow factoryClass="com.github.yyyangshenghao.beanrolehighlighter.toolWindow.MyToolWindowFactory" id="MyToolWindow"/>
         <postStartupActivity implementation="com.github.yyyangshenghao.beanrolehighlighter.startup.MyProjectActivity" />
+        <annotator language="JAVA"
+                   implementationClass="com.github.yyyangshenghao.beanrolehighlighter.BeanRoleAnnotator"/>
+        <colorSettingsPage
+                implementation="com.github.yyyangshenghao.beanrolehighlighter.BeanHighlightColorSettingsPage"/>
     </extensions>
 </idea-plugin>
