@@ -28,7 +28,10 @@ class BeanHighlightColorSettingsPage : ColorSettingsPage {
         return SyntaxHighlighterFactory.getSyntaxHighlighter(PlainTextLanguage.INSTANCE, null, null)
     }
 
-    override fun getDemoText(): String = "\"\"val userService: UserService\nval userMapper: UserMapper\"\""
+    override fun getDemoText(): String = "<service>userService</service>: UserService\n<mapper>userMapper</mapper>: UserMapper"
 
-    override fun getAdditionalHighlightingTagToDescriptorMap(): Map<String, TextAttributesKey>? = null
+    override fun getAdditionalHighlightingTagToDescriptorMap(): Map<String, TextAttributesKey> = mapOf(
+        "service" to BeanTextAttributes.SERVICE,
+        "mapper" to BeanTextAttributes.MAPPER,
+    )
 }
