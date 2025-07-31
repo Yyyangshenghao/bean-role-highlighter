@@ -10,9 +10,11 @@ import com.intellij.ui.components.JBPanel
 import com.intellij.ui.content.ContentFactory
 import com.github.yyyangshenghao.beanrolehighlighter.MyBundle
 import com.github.yyyangshenghao.beanrolehighlighter.services.MyProjectService
+import java.awt.Component
 import java.awt.Dimension
 import java.awt.Font
 import java.awt.Insets
+import javax.swing.BorderFactory
 import javax.swing.Box
 import javax.swing.BoxLayout
 import javax.swing.JButton
@@ -44,14 +46,17 @@ class MyToolWindowFactory : ToolWindowFactory {
         fun getContent(): JPanel {
             return JBPanel<JBPanel<*>>().apply {
                 layout = BoxLayout(this, BoxLayout.Y_AXIS)
+                border = BorderFactory.createEmptyBorder(16, 16, 16, 16)
 
-                val title = JLabel("📝 ToDo List")
-                title.font = Font(title.font.name, Font.BOLD, 16)
+                val title = JLabel("ToDo List")
+                title.font = Font(title.font.name, Font.BOLD, 15)
+                title.alignmentX = Component.CENTER_ALIGNMENT
                 add(title)
-                add(Box.createVerticalStrut(8))
+                add(Box.createVerticalStrut(12))
 
                 val inputPanel = JPanel().apply {
                     layout = BoxLayout(this, BoxLayout.X_AXIS)
+                    maximumSize = Dimension(Int.MAX_VALUE, 32)
                 }
                 val inputField = JTextField(16)
                 val addButton = JButton("添加")
@@ -59,16 +64,16 @@ class MyToolWindowFactory : ToolWindowFactory {
                 inputPanel.add(Box.createHorizontalStrut(8))
                 inputPanel.add(addButton)
                 add(inputPanel)
-                add(Box.createVerticalStrut(8))
+                add(Box.createVerticalStrut(10))
 
                 val todoListPanel = JPanel().apply {
                     layout = BoxLayout(this, BoxLayout.Y_AXIS)
                 }
                 val scrollPane = JScrollPane(todoListPanel)
-                scrollPane.preferredSize = Dimension(260, 220)
+                scrollPane.preferredSize = Dimension(260, 120)
                 add(scrollPane)
 
-                // 刷新列表
+                val todos = mutableListOf<String>()
                 fun refreshList() {
                     todoListPanel.removeAll()
                     todos.forEachIndexed { idx, todo ->
@@ -101,11 +106,7 @@ class MyToolWindowFactory : ToolWindowFactory {
                         refreshList()
                     }
                 }
-
-                inputField.addActionListener {
-                    addButton.doClick()
-                }
-
+                inputField.addActionListener { addButton.doClick() }
                 refreshList()
             }
         }
